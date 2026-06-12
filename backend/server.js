@@ -18,9 +18,12 @@ const PORT = process.env.PORT || 5000;
 // Configure Cross-Origin Resource Sharing (CORS) middleware.
 // This allows our React frontend (running on port 3000) to securely communicate with this server.
 app.use(cors({
-  origin: 'http://localhost:3000', // Allows requests only from the frontend local address
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Permitted HTTP request types
-  allowedHeaders: ['Content-Type', 'Authorization'] // Allowed header configurations
+  origin: [
+    'http://localhost:3000',
+    'https://bistroqr-app.vercel.app' // Allows your deployed Vercel frontend
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Express built-in middleware to parse incoming JSON payloads in request bodies

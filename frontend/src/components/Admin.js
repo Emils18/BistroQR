@@ -6,6 +6,7 @@ import axios from 'axios';
 const Admin = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   const fetchOrders = async () => {
     try {
