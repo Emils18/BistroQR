@@ -6,11 +6,14 @@ import axios from 'axios';
 const Admin = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // Dynamically uses the Vercel env variable in production, or localhost in development
   const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/orders');
+      // CORRECTED: Uses API_BASE instead of hardcoded localhost
+      const res = await axios.get(`${API_BASE}/api/orders`);
       setOrders(res.data);
     } catch (err) {
       console.error(err);
@@ -25,7 +28,8 @@ const Admin = () => {
 
   const updateStatus = async (orderId, targetStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/payment`, {
+      // CORRECTED: Uses API_BASE instead of hardcoded localhost
+      await axios.put(`${API_BASE}/api/orders/${orderId}/payment`, {
         payment_status: targetStatus
       });
       fetchOrders();
