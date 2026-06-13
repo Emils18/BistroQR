@@ -6,13 +6,10 @@ import axios from 'axios';
 const Admin = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  // Dynamically uses the Vercel env variable in production, or localhost in development
-  const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   const fetchOrders = async () => {
     try {
-      // CORRECTED: Uses API_BASE instead of hardcoded localhost
+      const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
       const res = await axios.get(`${API_BASE}/api/orders`);
       setOrders(res.data);
     } catch (err) {
@@ -28,7 +25,7 @@ const Admin = () => {
 
   const updateStatus = async (orderId, targetStatus) => {
     try {
-      // CORRECTED: Uses API_BASE instead of hardcoded localhost
+      const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
       await axios.put(`${API_BASE}/api/orders/${orderId}/payment`, {
         payment_status: targetStatus
       });
@@ -50,9 +47,6 @@ const Admin = () => {
     return [];
   };
 
-  // ═══════════════════════════════════════════════════════
-  // ANALYTICS COMPUTATIONS (STATS CARDS DATA ENHANCEMENT)
-  // ═══════════════════════════════════════════════════════
   const paidOrders = orders.filter(o => o.payment_status === 'paid');
   const pendingOrders = orders.filter(o => o.payment_status === 'pending');
   const grossRevenue = paidOrders.reduce((sum, o) => sum + parseFloat(o.total || 0), 0);
@@ -66,22 +60,20 @@ const Admin = () => {
   }
 
   return (
-    <div className="space-y-8 anim-fade-in">
-      
-      {/* Header Titles */}
+    <div className="space-y-6 anim-fade-in">
       <div>
         <h1 className="text-2xl font-black text-stone-900 tracking-tight">Active Invoices</h1>
         <p className="text-stone-500 text-xs mt-0.5">Control live order queue and update transaction states.</p>
       </div>
 
-      {/* Analytics Stats Dashboard Panel (Upgraded View) */}
+      {/* Analytics Stats Dashboard Panel (Highly Curved rounded-[32px]) */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         
         {/* Metric Card 1: Revenue */}
-        <div className="glass-card rounded-2xl p-5 border border-stone-200/80 hover:scale-[1.02] transition-transform duration-300">
+        <div className="glass-card rounded-[32px] p-5 border border-stone-200/80 hover:scale-[1.02] transition-transform duration-300">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">Gross Income</span>
-            <span className="p-2 bg-emerald-50 rounded-xl text-emerald-600 text-xs">💰</span>
+            <span className="p-2 bg-emerald-50 rounded-full text-emerald-600 text-xs">💰</span>
           </div>
           <p className="text-2xl font-black text-stone-900 mt-2">
             ${grossRevenue.toFixed(2)}
@@ -90,10 +82,10 @@ const Admin = () => {
         </div>
 
         {/* Metric Card 2: Processes */}
-        <div className="glass-card rounded-2xl p-5 border border-stone-200/80 hover:scale-[1.02] transition-transform duration-300">
+        <div className="glass-card rounded-[32px] p-5 border border-stone-200/80 hover:scale-[1.02] transition-transform duration-300">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">Processed Orders</span>
-            <span className="p-2 bg-orange-50 rounded-xl text-orange-600 text-xs">📋</span>
+            <span className="p-2 bg-orange-50 rounded-full text-orange-600 text-xs">📋</span>
           </div>
           <p className="text-2xl font-black text-stone-900 mt-2">
             {orders.length}
@@ -102,10 +94,10 @@ const Admin = () => {
         </div>
 
         {/* Metric Card 3: Pending */}
-        <div className="glass-card rounded-2xl p-5 border border-stone-200/80 hover:scale-[1.02] transition-transform duration-300">
+        <div className="glass-card rounded-[32px] p-5 border border-stone-200/80 hover:scale-[1.02] transition-transform duration-300">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">Pending Action</span>
-            <span className="p-2 bg-amber-50 rounded-xl text-amber-600 text-xs">⏳</span>
+            <span className="p-2 bg-amber-50 rounded-full text-amber-600 text-xs">⏳</span>
           </div>
           <p className="text-2xl font-black text-stone-900 mt-2">
             {pendingOrders.length}
@@ -115,8 +107,8 @@ const Admin = () => {
 
       </div>
 
-      {/* Main Order logs Table */}
-      <div className="glass-card rounded-2xl shadow-sm overflow-hidden border border-stone-200">
+      {/* Main Order table (Swiping scroll responsive outer container) */}
+      <div className="glass-card rounded-[32px] shadow-sm overflow-hidden border border-stone-200">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-stone-200 text-xs text-left">
             <thead className="bg-stone-50 text-stone-500">
@@ -148,15 +140,18 @@ const Admin = () => {
                       <td className="px-6 py-4 font-bold text-stone-800">
                         {order.customer_name}
                       </td>
-                      <td className="px-6 py-4 max-w-xs">
-                        <div className="flex flex-wrap gap-1">
+                      
+                      {/* Selections column (Wrapped soft oval pill chips) */}
+                      <td className="px-6 py-4 min-w-[200px] max-w-xs sm:max-w-md">
+                        <div className="flex flex-wrap gap-1.5 leading-relaxed">
                           {itemsList.map((item, idx) => (
-                            <span key={idx} className="bg-stone-50 border border-stone-200 rounded px-1.5 py-0.5 text-[10px] font-bold text-stone-600">
+                            <span key={idx} className="bg-stone-50 border border-stone-200/80 rounded-full px-2.5 py-1 text-[9px] font-bold text-stone-600 inline-block shadow-sm">
                               {item.name} <strong className="text-orange-600">×{item.quantity}</strong>
                             </span>
                           ))}
                         </div>
                       </td>
+                      
                       <td className="px-6 py-4 font-black text-stone-900">
                         ${parseFloat(order.total).toFixed(2)}
                       </td>
@@ -176,7 +171,7 @@ const Admin = () => {
                         <select
                           value={order.payment_status}
                           onChange={(e) => updateStatus(order.id, e.target.value)}
-                          className="select-custom text-[10px] font-bold text-stone-600 bg-white border border-stone-200 rounded-lg py-1 px-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                          className="select-custom text-[10px] font-bold text-stone-600 bg-white border border-stone-200 rounded-full py-1 px-3 focus:outline-none focus:ring-2 focus-ring-glow"
                         >
                           <option value="pending">Pending</option>
                           <option value="paid">Paid</option>

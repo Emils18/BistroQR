@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import modern typography sets */
+/* Import modern design typography */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
 
 /* ═══════════════════════════════════════════════════════
@@ -22,7 +22,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════
-   BASE ELEMENTS
+   BASE SETTINGS
 ═══════════════════════════════════════════════════════ */
 html {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -38,7 +38,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 /* ═══════════════════════════════════════════════════════
-   DECORATIVE CANVAS BACKGROUND
+   DECORATIVE MESH BACKDROP
 ═══════════════════════════════════════════════════════ */
 .mesh-bg {
   background-color: #FDF8F4;
@@ -62,7 +62,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
   background: rgba(253, 248, 244, 0.88);
   backdrop-filter: blur(20px) saturate(1.6);
   -webkit-backdrop-filter: blur(20px) saturate(1.6);
-  border-bottom: 1px solid rgba(232, 93, 4, 0.10);
+  border: 1px solid rgba(232, 93, 4, 0.08);
 }
 .glass-card {
   background: rgba(255, 255, 255, 0.92);
@@ -70,12 +70,12 @@ h1, h2, h3, h4, h5, h6, .font-display {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(239, 237, 233, 0.95);
   box-shadow:
-    0 1px 3px rgba(28, 25, 23, 0.05),
-    0 4px 16px rgba(28, 25, 23, 0.05);
+    0 1px 3px rgba(28, 25, 23, 0.03),
+    0 4px 16px rgba(28, 25, 23, 0.04);
 }
 
 /* ═══════════════════════════════════════════════════════
-   ANIMATION KEYFRAMES
+   KEYFRAME SCHEMES
 ═══════════════════════════════════════════════════════ */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -97,28 +97,31 @@ h1, h2, h3, h4, h5, h6, .font-display {
   0%   { background-position: -500% 0; }
   100% { background-position: 500% 0; }
 }
-/* Laser line scrolling pattern for the QR view */
 @keyframes scanLaser {
   0% { top: 0%; opacity: 0; }
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { top: 100%; opacity: 0; }
 }
-/* Shaking pop sequence triggered when elements are added to cart */
 @keyframes popPulse {
   0% { transform: scale(1); }
   30% { transform: scale(1.18) rotate(-6deg); }
   60% { transform: scale(0.95) rotate(3deg); }
   100% { transform: scale(1) rotate(0deg); }
 }
-/* Slide transition path for the drawer panel */
 @keyframes slideInDrawer {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
 }
+/* Shifting gradient color animation for the interactive brand logo */
+@keyframes textShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
 /* ═══════════════════════════════════════════════════════
-   CLASS DECLARATIONS
+   TRANSITION HOOKS
 ═══════════════════════════════════════════════════════ */
 .anim-fade-in      { animation: fadeIn         0.40s ease both; }
 .anim-fade-in-up   { animation: fadeInUp        0.48s ease both; }
@@ -128,8 +131,24 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .anim-pop-pulse    { animation: popPulse        0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
 .anim-slide-drawer { animation: slideInDrawer   0.38s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
+/* Dynamic multi-color gradient shimmer styling on logo */
+.logo-shimmer {
+  background: linear-gradient(135deg, #E85D04, #DC2626, #F59E0B, #E85D04);
+  background-size: 300% 300%;
+  animation: textShimmer 4s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom interactive outline glow for inputs on focus */
+.focus-ring-glow:focus {
+  box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.15);
+  border-color: #E85D04;
+}
+
 /* ═══════════════════════════════════════════════════════
-   SCROLLBAR UTILITIES
+   SCROLLBAR PRESETS
 ═══════════════════════════════════════════════════════ */
 ::-webkit-scrollbar       { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -139,7 +158,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* ═══════════════════════════════════════════════════════
-   SHIMMER PLUGINS (LOADERS)
+   SHIMMER MODULES
 ═══════════════════════════════════════════════════════ */
 .skeleton {
   background: linear-gradient(
@@ -154,7 +173,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 /* ═══════════════════════════════════════════════════════
-   INTERACTIVE BUTTONS
+   OVAL ACTION BUTTONS
 ═══════════════════════════════════════════════════════ */
 .btn-fire {
   position: relative;
@@ -164,11 +183,11 @@ h1, h2, h3, h4, h5, h6, .font-display {
   justify-content: center;
   background: linear-gradient(135deg, #E85D04 0%, #DC2626 100%);
   color: #fff;
-  border-radius: 0.75rem;
+  border-radius: 9999px;
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.18s ease;
 }
 .btn-fire::after {
   content: '';
@@ -179,11 +198,11 @@ h1, h2, h3, h4, h5, h6, .font-display {
   border-radius: inherit;
 }
 .btn-fire:hover  {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
   box-shadow: 0 10px 28px rgba(232, 93, 4, 0.38), 0 2px 6px rgba(232, 93, 4, 0.22);
 }
 .btn-fire:active {
-  transform: translateY(0px);
+  transform: translateY(0px) scale(0.98);
   box-shadow: 0 4px 12px rgba(232, 93, 4, 0.26);
 }
 .btn-fire:disabled {
@@ -196,17 +215,20 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .btn-ghost-fire {
   border: 1.5px solid rgba(232, 93, 4, 0.28);
   color: #E85D04;
-  border-radius: 0.75rem;
+  border-radius: 9999px;
   background: rgba(232, 93, 4, 0.05);
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .btn-ghost-fire:hover {
   background: rgba(232, 93, 4, 0.12);
   border-color: rgba(232, 93, 4, 0.45);
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.02);
+}
+.btn-ghost-fire:active {
+  transform: scale(0.98);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -224,9 +246,15 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 .pill {
-  transition: all 0.18s ease;
+  transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
   cursor: pointer;
   white-space: nowrap;
+}
+.pill:hover {
+  transform: translateY(-1px) scale(1.03);
+}
+.pill:active {
+  transform: scale(0.97);
 }
 .pill-active {
   background: linear-gradient(135deg, #E85D04, #DC2626) !important;
@@ -236,7 +264,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 /* ═══════════════════════════════════════════════════════
-   QUANTITY UTILITIES
+   ROUNDED QUANTITY UTILITIES
 ═══════════════════════════════════════════════════════ */
 .qty-btn {
   display: inline-flex;
@@ -244,7 +272,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
   justify-content: center;
   width: 28px;
   height: 28px;
-  border-radius: 0.5rem;
+  border-radius: 9999px;
   border: 1px solid #E7E5E4;
   background: #fff;
   color: #78716C;
@@ -274,14 +302,14 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 /* ═══════════════════════════════════════════════════════
-   BADGES & FIELDS
+   BADGES & CHIPS
 ═══════════════════════════════════════════════════════ */
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 10px;
-  border-radius: 999px;
+  padding: 4px 12px;
+  border-radius: 9999px;
   font-size: 0.70rem;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -309,8 +337,8 @@ h1, h2, h3, h4, h5, h6, .font-display {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 8px center;
-  padding-right: 26px !important;
+  background-position: right 10px center;
+  padding-right: 28px !important;
   cursor: pointer;
 }
 

@@ -54,8 +54,6 @@ const Cart = () => {
 
     try {
       const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-      
-      // CORRECTED: Uses API_BASE instead of hardcoded localhost
       await axios.post(`${API_BASE}/api/orders`, payload);
       alert(`🎉 Receipt Generated for ${payload.customer_name}!`);
       clearCart();
@@ -69,7 +67,6 @@ const Cart = () => {
     }
   };
 
-  // RENDER PORTION 1: Closed FAB
   if (!isCartOpen) {
     return (
       <button
@@ -90,20 +87,21 @@ const Cart = () => {
     );
   }
 
-  // RENDER PORTION 2: Drawer Open
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
+      
       <div 
         className="absolute inset-0 bg-stone-950/40 backdrop-blur-xs transition-opacity duration-300"
         onClick={() => setIsCartOpen(false)}
       />
+
       <div className="absolute inset-y-0 right-0 max-w-full flex">
-        <div className="w-screen max-w-md bg-white/95 backdrop-blur-md shadow-2xl flex flex-col border-l border-stone-200/50 anim-slide-drawer">
+        <div className="w-screen max-w-md bg-white/95 backdrop-blur-md shadow-2xl flex flex-col border-l border-stone-200/50 anim-slide-drawer rounded-l-[40px]">
           <div className="px-6 py-5 border-b border-stone-100 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-xl">🛒</span>
               <h2 className="text-base font-extrabold text-stone-900">Your Selection</h2>
-              <span className="bg-stone-100 text-stone-600 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-stone-200">
+              <span className="bg-stone-100 text-stone-600 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-stone-200">
                 {totalItemsCount} items
               </span>
             </div>
@@ -127,7 +125,7 @@ const Cart = () => {
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <div className="flex items-center gap-1 bg-stone-50 border border-stone-200 rounded-lg p-0.5">
+                    <div className="flex items-center gap-1 bg-stone-50 border border-stone-200 rounded-full p-0.5">
                       <button onClick={() => updateQuantity(item.id, -1)} className="qty-btn">−</button>
                       <span className="w-6 text-center text-xs font-bold text-stone-800">{item.quantity}</span>
                       <button onClick={() => updateQuantity(item.id, 1)} className="qty-btn">＋</button>
@@ -140,18 +138,18 @@ const Cart = () => {
           </div>
 
           {cart.length > 0 && (
-            <div className="border-t border-stone-100 px-6 py-6 space-y-4 bg-stone-50/50">
+            <div className="border-t border-stone-100 px-6 py-6 space-y-4 bg-stone-50/50 rounded-bl-[40px]">
               <div className="space-y-1">
-                <label className="text-[10px] font-extrabold text-stone-500 uppercase tracking-wider block">Customer Name</label>
+                <label className="text-[10px] font-extrabold text-stone-500 uppercase tracking-wider block ml-2">Customer Name</label>
                 <input
                   type="text"
                   placeholder="Guest User"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full text-xs p-3 bg-white border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-200 font-medium"
+                  className="w-full text-xs p-3 bg-white border border-stone-200 rounded-full focus:outline-none focus:ring-2 focus-ring-glow transition-all duration-200 font-medium"
                 />
               </div>
-              <div className="flex justify-between items-center py-2">
+              <div className="flex justify-between items-center py-2 px-2">
                 <span className="text-xs text-stone-500 font-bold">Total Bill:</span>
                 <span className="text-xl font-black text-stone-900">${totalAmount.toFixed(2)}</span>
               </div>
@@ -168,7 +166,7 @@ const Cart = () => {
 
       {showPaymentModal && (
         <div className="fixed inset-0 bg-stone-950/60 backdrop-blur-xs flex items-center justify-center z-[60] p-4 anim-fade-in">
-          <div className="bg-white rounded-3xl p-6 max-w-xs w-full shadow-2xl border border-stone-100 text-center anim-scale-bounce">
+          <div className="bg-white rounded-[32px] p-6 max-w-xs w-full shadow-2xl border border-stone-100 text-center anim-scale-bounce">
             <span className="text-3xl">🛡️</span>
             <h3 className="text-base font-extrabold mt-2 text-stone-900">Sandbox Terminal</h3>
             <p className="text-stone-400 text-[11px] mt-1 mb-5">This triggers a sandbox transaction for development testing.</p>
