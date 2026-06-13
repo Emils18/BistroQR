@@ -67,11 +67,13 @@ const Cart = () => {
     }
   };
 
+  // RENDER PORTION 1: Drawer Closed -> Show Custom Floating Head (FAB)
   if (!isCartOpen) {
     return (
       <button
         onClick={() => setIsCartOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-2xl active:scale-95 transition-all duration-200 group border border-white/20 ${
+        // CORRECTED: 'bottom-20 sm:bottom-6' clears space above the bottom nav capsule on mobile viewports
+        className={`fixed bottom-20 right-6 sm:bottom-6 sm:right-6 z-50 flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-2xl active:scale-95 transition-all duration-200 group border border-white/20 ${
           isBumping ? 'anim-pop-pulse shadow-orange-500/40 ring-4 ring-orange-500/20' : 'hover:scale-110'
         }`}
         title="Open Basket"
@@ -87,6 +89,7 @@ const Cart = () => {
     );
   }
 
+  // RENDER PORTION 2: Drawer Open
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
       
